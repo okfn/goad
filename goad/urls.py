@@ -8,6 +8,6 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'goad.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^$', include(badger.urls_simple)),
+    url(r'^', include(badger.urls_simple)),
     url(r'^admin/', include(admin.site.urls)),
 )
