@@ -73,19 +73,29 @@ USE_L10N = True
 
 USE_TZ = True
 
+TEMPLATE_DIRS= (
+  os.path.join(BASE_DIR, 'templates')
+  )
+
+TEMPLATE_LOADERS=(
+  'django.template.loaders.filesystem.Loader',
+  'django.template.loaders.app_directories.Loader',
+  )
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+MEDIA_ROOT=os.path.join(BASE_DIR,'static/uploads')
+MEDIA_URL=('/static/uploads/')
 STATIC_ROOT='staticfiles'
 STATIC_URL = '/static/'
 STATICFILES_DIRS =  (
-  os.path.join(BASE_DIR, 'static' ),
+  os.path.join(BASE_DIR,'static'),
    )
 
 BADGER_SITE_ISSUER= {
  'origin': 'http://okfn.org',
  'name': 'Goad',
  'org': 'Open Knowledge Foundation',
- 'contact': 'michael.bauer@okfn.org',
-                }
+ 'contact': 'michael.bauer@okfn.org', }

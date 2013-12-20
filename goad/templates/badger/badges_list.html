@@ -1,0 +1,5 @@
+Foo!
+
+{% for b in badge_list %}
+<li><a href="/badge/{{b.slug}}/"><img src="/static/uploads/uploads/{{b.image}}">{{b.title}}</a></li>
+{% endfor %}
