@@ -16,7 +16,7 @@ def issuer(request,slug=None):
     "image": i.image,
     "description": i.description,
     "email": i.email,
-    "revocationList": "http://%s/issuer/%s/revocation"%(request.get_host(),i.slug) }
+    "revocationList": "http://%s/revocation"%request.get_host() }
   return HttpResponse(json.dumps(data), content_type="application/json")
 
 def badge(request,slug):
