@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'badger'
+    'okbadger'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,8 +94,3 @@ STATICFILES_DIRS =  (
   os.path.join(BASE_DIR,'static'),
    )
 
-BADGER_SITE_ISSUER= {
- 'origin': 'http://okfn.org',
- 'name': 'Goad',
- 'org': 'Open Knowledge Foundation',
- 'contact': 'michael.bauer@okfn.org', }
