@@ -1,13 +1,12 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render_to_response,get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse,Http404
-from okbadger.models import Issuer,Badge,Instance,Revocation
+from okbadger.models import Issuer,Badge,Instance,Revocation,Claim
 import json
 import markdown
 import hashlib
 import time
 
-# Create your views here.
 
 def issuer(request,slug=None):
   i=get_object_or_404(Issuer, slug=slug)
@@ -63,4 +62,8 @@ def revocation(request):
   data=dict(((i.instance.id,i.reason) for i in r))
   return HttpResponse(json.dumps(data), content_type="application/json")
 
-  
+
+def claim(request,id=None):
+  i=get_object_or_404(Claim,id=id)
+  data={}
+  return render_to_response("claim.html",data)

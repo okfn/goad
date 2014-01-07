@@ -43,4 +43,19 @@ class Revocation(models.Model):
 
   def __unicode__(self):
     return "%s:%s"%(self.instance.id, self.reason)
-  
+ 
+
+class Claim(models.Model):
+  recipient = models.CharField(max_length=500,null=True,blank=True)
+  evidence = models.CharField(max_length=500, null=True, blank=True)
+  instance = models.ForeignKey('Instance',null=True, blank=True)
+  badge = models.ForeignKey('Badge')
+
+  def __unicode__(self):
+    return "%s:%s:%s"%(self.badge.name,self.recipient,self.evidence)
+
+class Application(models.Model):
+  key= models.CharField(max_length=100)
+  badges = models.ManyToManyField('Badge')
+
+
