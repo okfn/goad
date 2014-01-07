@@ -15,7 +15,8 @@ def issuer(request,slug=None):
     "image": i.image,
     "description": i.description,
     "email": i.email,
-    "revocationList": "http://%s/revocation"%request.get_host() }
+    "revocationList": request.build_absolute_uri('../revocation')
+    }
   return HttpResponse(json.dumps(data), content_type="application/json")
 
 def badge(request,slug):
@@ -24,8 +25,8 @@ def badge(request,slug):
     "name": i.name,
     "description": i.description,
     "image": i.image,
-    "criteria": "http://%s/badge/%s/criteria"%(request.get_host(),i.slug),
-    "issuer": "http://%s/issuer/%s"%(request.get_host(),i.issuer.slug),
+    "criteria": request.build_absolute_uri('./%s/criteria'%i.slug),
+    "issuer": request.build_absolute_uri('../issuer/%s'%i.issuer.slug),
     }
   return HttpResponse(json.dumps(data), content_type="application/json")
 
@@ -46,7 +47,7 @@ def instance(request,slug,id):
         "hashed": True,
         "type": "email",
         },
-      "badge": "http://%s/badge/%s"%(request.get_host(),i.badge.slug),
+      "badge": request.build_absolute_uri("../../%s"%i.badge.slug),
       "verify": {
         "type":"hosted",
         "url": request.build_absolute_uri()
