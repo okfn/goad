@@ -11,6 +11,6 @@ urlpatterns = patterns('',
     url(r'^badge/(?P<slug>[-\w]+)$','okbadger.views.badge'),
     url(r'^badge/(?P<slug>[-\w]+)/criteria','okbadger.views.badge_criteria'),
     url(r'^badge/(?P<slug>[-\w]+)/instance/(?P<id>\d+)','okbadger.views.instance'),
-    url(r'^claim/(?P<id>\d+)$,'okbadger.views.claim'),
+    url(r'^claim/(?P<id>\d+)$','okbadger.views.claim'),
 
 )
