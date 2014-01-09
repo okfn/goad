@@ -17,6 +17,7 @@ def issuer(request,slug=None):
     "image": i.image,
     "description": i.description,
     "email": i.email,
+    "contact": i.email,
     "revocationList": request.build_absolute_uri('../revocation')
     }
   return HttpResponse(json.dumps(data), content_type="application/json")
