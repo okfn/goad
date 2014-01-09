@@ -4,8 +4,12 @@ from okbadger.models import Issuer,Badge,Instance,Revocation,Claim,Application
 admin.site.register(Issuer)
 admin.site.register(Badge)
 admin.site.register(Instance)
-admin.site.register(Claim)
 admin.site.register(Application)
 admin.site.register(Revocation)
 
-# Register your models here.
+class ClaimAdmin(admin.ModelAdmin):
+  model = Claim
+  list_display = ('badge', 'recipient', 'evidence')
+  readonly_fields = ('id',)
+
+admin.site.register(Claim, ClaimAdmin)
