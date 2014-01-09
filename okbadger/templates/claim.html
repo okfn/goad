@@ -1,7 +1,10 @@
 {% extends "badge-base.html" %}
 
 {% block "content" %}
-<img src="{{claim.badge.image}}">
+<span class="left">
+<img class="badge" src="{{claim.badge.image}}">
+</span>
+<span class="right">
 <div class="announcement">Claim your {{claim.badge.name}} Badge!</div>
 {% if claim.recipient %}
 
@@ -18,6 +21,7 @@ Claim your badge <a href="#" onclick=claim()>Here</a>
 <input type="submit" value="Claim Your Badge!" />
 </form>
 {% endif %}
+</span>
 {% endblock %}
 {% block "scripts" %}
 {% if assertion %}

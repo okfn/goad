@@ -1,0 +1,34 @@
+.content {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  }
+.container {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  }
+.header span{
+  color: #fff;
+  font-size: 300%;
+  height: 100px;
+  vertical-align: super;
+  }
+
+.header img {
+  width: 300px;
+  }
+img.badge {
+  width: 100%;
+  }
+ 
+span.left {
+  display: inline-block;
+  width: 200px;
+  }
+
+span.right {
+  display: inline-block;
+  width: 290px;
+  vertical-align: top;
+  }

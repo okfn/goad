@@ -6,13 +6,23 @@
 {% block "title" %}
 {% endblock %}
 </title>
+<link rel="stylesheet" href="/static/css/schoolofdata.css" />
+<link rel="stylesheet" href="/static/css/badges.css" />
 {% block "head" %}
 {% endblock %}
 </head>
 <body>
+<div class="container">
+<div class="header">
+<img src="http://assets.okfn.org/p/schoolofdata/img/logo-white.png" />
+<span>
+Badges!
+</span>
+</div>
 <div class="content">
 {% block "content" %}
 {% endblock %}
+</div>
 </div>
 {% block "scripts" %}
 {% endblock %}
