@@ -93,3 +93,9 @@ def claim(request,id=None):
       i.instance.id))
   data.update(csrf(request))
   return render_to_response("claim.html",data)
+
+def home(request):
+  data={"badges":Badge.objects.all()[0:20],
+    }
+  return render_to_response("start.html",data)
+

@@ -1,0 +1,29 @@
+{% extends "badge-base.html" %}
+
+{% block "title" %}
+School of Data Badges!
+{% endblock %}
+
+{% block "content" %}
+<h1>School of Data Badges</h1>
+
+The School of Data offers <a href="http://openbadges.org">Badges</a> for a variety of activities including (but
+not limited to):
+<ul>
+<li>Finishing Online Courses</li>
+<li>Attending Workshops</li>
+<li>Giving Workshops</li>
+<li>Participating in Data Expeditions</li>
+</ul>
+
+These are some of the badges you can earn:
+<table>
+{% for b in badges %}
+<tr><td class="image"><img class="badge" src="{{b.image}}"></td>
+<td><b>{{b.name}}</b><br/>
+{{b.description}} <br/><a
+href="/badges/{{b.slug}}/criteria">criteria</a>
+</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

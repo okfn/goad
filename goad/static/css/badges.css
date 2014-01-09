@@ -60,3 +60,7 @@ div.announcement {
 .btn:hover {
   background: #0aa1db;
   }
+
+td.image {
+  width: 200px;
+  }

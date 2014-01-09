@@ -5,7 +5,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'goad.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    # url(r'^$','okbadger.views.home'),
+    url(r'^$','okbadger.views.home'),
     url(r'^issuer/(?P<slug>[-\w]+)$', 'okbadger.views.issuer'),
     url(r'^revocation$', 'okbadger.views.revocation'), 
     url(r'^badge/(?P<slug>[-\w]+)$','okbadger.views.badge'),
