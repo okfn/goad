@@ -32,3 +32,31 @@ span.right {
   width: 290px;
   vertical-align: top;
   }
+
+.content input {
+  border: 1px solid black;
+  width: 200px;
+  display: block;
+  } 
+
+div.announcement {
+  font-weight: bold;
+  }
+
+.btn {
+  background: #0db1db;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  }
+
+.btn-large {
+  font-size: 120%;
+  padding: 10px;
+  }
+
+.btn:hover {
+  background: #0aa1db;
+  }

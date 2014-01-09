@@ -5,10 +5,16 @@
 <img class="badge" src="{{claim.badge.image}}">
 </span>
 <span class="right">
-<div class="announcement">Claim your {{claim.badge.name}} Badge!</div>
+<div class="announcement">Claim your <i>{{claim.badge.name}}</i> Badge!</div>
+<div class="description">
+{{claim.badge.description}}
+</div>
+
 {% if claim.recipient %}
 
-Claim your badge <a href="#" onclick=claim()>Here</a>
+<div>
+<a class="btn btn-large" href="#" onclick=claim()>Send to your Backpack!</a>
+</div>
 {% else %}
 <form method="POST">
 {% csrf_token %}
