@@ -1,0 +1,33 @@
+{% extends "badge-base.html" %}
+
+{% block "content" %}
+<img src="{{claim.badge.image}}">
+<div class="announcement">Claim your {{claim.badge.name}} Badge!</div>
+{% if claim.recipient %}
+
+Claim your badge <a href="#" onclick=claim()>Here</a>
+{% else %}
+<form method="POST">
+{% csrf_token %}
+<label for="recipient-input">Your Email Address:</label>
+<input id="recipient-input" name="recipient" type="text" />
+{% if claim.code %}
+<label for="code-input">Claim Code</label>
+<input id="code-input" name="code" type="text" />
+{% endif %}
+<input type="submit" value="Claim Your Badge!" />
+</form>
+{% endif %}
+{% endblock %}
+{% block "scripts" %}
+{% if assertion %}
+<script src="https://backpack.openbadges.org/issuer.js"></script>
+<script>
+var assertion = "{{assertion}}";
+function claim() {
+  OpenBadges.issue(assertion, function (e,s) {
+    console.log(e,s);})
+  }
+</script>
+{% endif %}
+{% endblock %}

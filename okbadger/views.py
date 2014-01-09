@@ -1,7 +1,9 @@
 from django.shortcuts import render_to_response,get_object_or_404
+from django.core.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse,Http404
 from okbadger.models import Issuer,Badge,Instance,Revocation,Claim
+from okbadger.util import create_new_instance
 import json
 import markdown
 import hashlib
@@ -65,6 +67,25 @@ def revocation(request):
 
 
 def claim(request,id=None):
+  """ Claim processing """
   i=get_object_or_404(Claim,id=id)
-  data={}
+  # THIS IS UGLY - FIX!
+  if i.recipient:
+    i.multiple=False
+  if request.method == "POST":
+    if i.code:
+      if i.code==request.POST["code"]:
+        i.recipient = request.POST["recipient"]
+    else:
+      i.recipient = request.POST["recipient"]
+  if not i.instance and i.recipient:
+    i.instance=create_new_instance(i.badge,i.recipient,i.evidence)
+  if not i.multiple:
+    i.save()
+  data={"claim": i,
+    }
+  if i.instance:
+    data["assertion"]=request.build_absolute_uri("../badge/%s/instance/%s"%(i.badge.slug,
+      i.instance.id))
+  data.update(csrf(request))
   return render_to_response("claim.html",data)
