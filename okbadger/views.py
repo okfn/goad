@@ -35,7 +35,10 @@ def badge(request,slug):
 
 def badge_criteria(request,slug):
   i=get_object_or_404(Badge, slug=slug)
-  return HttpResponse(markdown.markdown(i.criteria))
+  data={
+    "badge":i,
+    "criteria":markdown.markdown(i.criteria) }
+  return render_to_response("criteria.html",data)
 
 def instance(request,slug,id):
   i=get_object_or_404(Instance,id=id)
