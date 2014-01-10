@@ -9,7 +9,6 @@ import markdown
 import hashlib
 import time
 
-
 def issuer(request,slug=None):
   i=get_object_or_404(Issuer, slug=slug)
   data={"name": i.name,

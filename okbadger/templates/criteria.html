@@ -1,10 +1,10 @@
 {% extends "badge-base.html" %}
-
+{% load md %}
 {% block "content" %}
 <span class="left">
 <img class="badge" src="{{badge.image}}" />
 </span>
 <span class="right">
-{{criteria|safe}}
+{{badge.criteria|markdown}}
 </span>
 {% endblock %}
