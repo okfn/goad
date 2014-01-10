@@ -60,4 +60,5 @@ class Application(models.Model):
   key= models.CharField(max_length=100)
   badges = models.ManyToManyField('Badge')
 
-
+  def __unicode__(self):
+    return "%s:%s"%(self.id,self.key)

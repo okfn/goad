@@ -2,8 +2,8 @@ from django.shortcuts import render_to_response,get_object_or_404
 from django.core.context_processors import csrf
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse,Http404
-from okbadger.models import Issuer,Badge,Instance,Revocation,Claim
-from okbadger.util import create_new_instance
+from okbadger.models import Issuer,Badge,Instance,Revocation,Claim,Application
+from okbadger.util import create_new_instance,json_response,create_or_return_claim
 import json
 import markdown
 import hashlib
@@ -19,7 +19,7 @@ def issuer(request,slug=None):
     "contact": i.email,
     "revocationList": request.build_absolute_uri('../revocation')
     }
-  return HttpResponse(json.dumps(data), content_type="application/json")
+  return json_response(data)
 
 def badge(request,slug):
   i=get_object_or_404(Badge, slug=slug)
@@ -30,7 +30,7 @@ def badge(request,slug):
     "criteria": request.build_absolute_uri('./%s/criteria'%i.slug),
     "issuer": request.build_absolute_uri('../issuer/%s'%i.issuer.slug),
     }
-  return HttpResponse(json.dumps(data), content_type="application/json")
+  return json_response(data)
 
 def badge_criteria(request,slug):
   i=get_object_or_404(Badge, slug=slug)
@@ -61,12 +61,12 @@ def instance(request,slug,id):
       "evidence": i.evidence,
   
       }
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    return json_response(data)
 
 def revocation(request):
   r=Revocation.objects.all()
   data=dict(((i.instance.id,i.reason) for i in r))
-  return HttpResponse(json.dumps(data), content_type="application/json")
+  return json_response(data)
 
 
 def claim(request,id=None):
@@ -98,3 +98,38 @@ def home(request):
     }
   return render_to_response("start.html",data)
 
+def issue_api(request):
+  required_parameters=['id','badge','recipient','key']
+  data={}
+  if not reduce(lambda x,y: x and y, 
+    map(lambda x: x in request.GET.keys(),required_parameters)):
+    data={"status":"error",
+      "reason": "not all required parameters were passed: %s "%required_parameters
+      }
+    return json_response(data)  
+  try:
+    app=Application.objects.get(id=request.GET['id'],key=request.GET['key'])
+  except ObjectDoesNotExist:
+    data={"status": "error",
+      "reason":"invalid application credentials"}
+    return json_response(data)
+  try:
+    b=Badge.objects.get(slug=request.GET['badge'])
+  except ObjectDoesNotExist:
+    data={"status":"error",
+      "reason":"badge %s does not exist"%request.GET['badge'] }
+    return json_response(data)
+  try:
+    app.badges.get(id=b.id)
+  except ObjectDoesNotExist:
+    data={"status":"error",
+      "reason":"the application is not allowed to issue badge %s"%b.slug }
+    return json_response(data)
+  c=create_or_return_claim(b,request.GET['recipient'],request.GET.get('evidence',None))
+  data={"status":"success",
+    "claim":request.build_absolute_uri("../claim/%s"%c.id),
+    "assertion":request.build_absolute_uri("../badge/%s/instance/%s"%(b.slug,
+      c.instance.id)),
+      }
+
+  return json_response(data)
