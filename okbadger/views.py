@@ -99,7 +99,7 @@ def home(request):
   return render_to_response("start.html",data)
 
 def issue_api(request):
-  required_parameters=['id','badge','recipient','key']
+  required_parameters=['id','badge','recipient','signature']
   data={}
   if not reduce(lambda x,y: x and y, 
     map(lambda x: x in request.GET.keys(),required_parameters)):
@@ -108,7 +108,7 @@ def issue_api(request):
       }
     return json_response(data)  
   try:
-    app=Application.objects.get(id=request.GET['id'],key=request.GET['key'])
+    app=Application.objects.get(id=request.GET['id'])
   except ObjectDoesNotExist:
     data={"status": "error",
       "reason":"invalid application credentials"}
@@ -124,6 +124,12 @@ def issue_api(request):
   except ObjectDoesNotExist:
     data={"status":"error",
       "reason":"the application is not allowed to issue badge %s"%b.slug }
+    return json_response(data)
+  if not request.GET['signature'] == hashlib.sha256(request.GET['badge']+
+        request.GET['recipient']+
+        app.key).hexdigest():
+    data={"status":"error",
+      "reason":"invalid signature"}
     return json_response(data)
   c=create_or_return_claim(b,request.GET['recipient'],request.GET.get('evidence',None))
   data={"status":"success",
