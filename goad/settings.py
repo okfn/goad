@@ -8,8 +8,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 import dj_database_url
-DATABASES={}
-DATABASES['default'] =  dj_database_url.config()
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
@@ -23,10 +23,12 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY','y!j90@66i=03^y-skq1-k2%1e&bri*-@9t8=w(h9q%)ll8sdzg')
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'y!j90@66i=03^y-skq1-k2%1e&bri*-@9t8=w(h9q%)ll8sdzg')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG',"true") == "true"
+DEBUG = os.environ.get('DEBUG', "true") == "true"
 
 TEMPLATE_DEBUG = True
 
@@ -73,24 +75,23 @@ USE_L10N = True
 
 USE_TZ = True
 
-TEMPLATE_DIRS= (
-  os.path.join(BASE_DIR, 'templates')
-  )
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates')
+    )
 
-TEMPLATE_LOADERS=(
-  'django.template.loaders.filesystem.Loader',
-  'django.template.loaders.app_directories.Loader',
-  )
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    )
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-MEDIA_ROOT=os.path.join(BASE_DIR,'static/uploads')
-MEDIA_URL=('/static/uploads/')
-STATIC_ROOT='staticfiles'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/uploads')
+MEDIA_URL = ('/static/uploads/')
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-STATICFILES_DIRS =  (
-  os.path.join(BASE_DIR,'static'),
-   )
-
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    )
