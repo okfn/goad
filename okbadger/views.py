@@ -156,5 +156,12 @@ def issue_api(request):
             "assertion": request.build_absolute_uri(
                 "../badge/%s/instance/%s" % (b.slug,
                                              c.instance.id)),
+            "badge": {
+                "name": b.name,
+                "slug": b.slug,
+                "image": b.image,
+                "description": b.description,
+                "criteria": b.criteria,
+                },
             }
     return json_response(data)
