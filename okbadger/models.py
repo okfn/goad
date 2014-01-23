@@ -1,3 +1,5 @@
+import re
+from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
@@ -38,6 +40,11 @@ class Instance(models.Model):
 
     def __unicode__(self):
         return u"%s:%s" % (self.badge.name, self.id)
+
+    def clean(self):
+        if not re.match("^http[s]{0,1}://",self.evidence):
+            raise ValidationError("Evidence has to be a http[s] URL")
+        
 
 
 class Revocation(models.Model):
