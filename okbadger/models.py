@@ -62,8 +62,9 @@ class Claim(models.Model):
 
 
 class Application(models.Model):
+    name = models.CharField(max_length=100)
     key = models.CharField(max_length=100)
     badges = models.ManyToManyField('Badge')
 
     def __unicode__(self):
-        return "%s:%s" % (self.id, self.key)
+        return self.name
