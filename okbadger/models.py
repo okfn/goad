@@ -6,7 +6,7 @@ from django.db import models
 class Issuer(models.Model):
     """ The issuer class - this represents the issuing organization """
     name = models.CharField(max_length=200)
-    slug = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(unique=True)
     url = models.CharField(max_length=255)
     description = models.TextField()
     image = models.CharField(max_length=255)
@@ -18,7 +18,7 @@ class Issuer(models.Model):
 
 class Badge(models.Model):
     """ The badge description """
-    slug = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(unique=True)
     name = models.CharField(max_length=500)
     description = models.TextField()
     image = models.CharField(max_length=500)
