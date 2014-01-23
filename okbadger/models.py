@@ -10,7 +10,7 @@ class Issuer(models.Model):
     url = models.CharField(max_length=255)
     description = models.TextField()
     image = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
+    email = models.EmailField()
 
     def __unicode__(self):
         return self.name
