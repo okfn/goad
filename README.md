@@ -4,7 +4,7 @@ Goad is a small [OpenBadges](http://openbadges.org) badging server built
 for the [Open Knowledge Foundation](http://okfn.org).
 
 Check it out at
-[scoda-badges.herokuapp.com](http://scoda-badges.herokuapp.com).
+[badges.schoolofdata.org](http://badges.schoolofdata.org)
 
 ## Features
 
@@ -25,6 +25,15 @@ Create a virtualenv then:
 ```
 pip install -r requirements.txt
 ```
+
+### Initialize the database
+
+```
+DATABASE_URL=<dburl> python manage.py syncdb
+DATABASE_URL=<dburl> python manage.py migrate okbadger --fake
+```
+
+*dburl* can be something like: sqlite://test.sqlite
 
 ### Run
 
