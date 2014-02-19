@@ -1,12 +1,15 @@
 {% extends "badge-base.html" %}
 {% load md %} 
+{% load i18n %}
+{% trans "School of Data Badges" as title %}
 {% block "title" %}
-School of Data Badges!
+{{ title }}
 {% endblock %}
 
 {% block "content" %}
-<h1>School of Data Badges</h1>
+<h1>{{ title }}</h1>
 
+{% blocktrans %}
 The School of Data offers <a href="http://openbadges.org">Badges</a> for a variety of activities including (but
 not limited to):
 <ul>
@@ -17,12 +20,13 @@ not limited to):
 </ul>
 
 These are some of the badges you can earn:
+{% endblocktrans %}
 <table>
 {% for b in badges %}
 <tr><td class="image"><img class="badge" src="{{b.image}}"></td>
 <td><b>{{b.name}}</b><br/>
 {{b.description|markdown}} <br/><a
-href="/badge/{{b.slug}}/criteria">criteria</a>
+href="/badge/{{b.slug}}/criteria">{% trans "criteria" %}</a>
 </td></tr>
 {% endfor %}
 </table>

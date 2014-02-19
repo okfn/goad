@@ -1,12 +1,17 @@
 {% extends "badge-base.html" %}
 
 {% load md %}
+{% load i18n %}
 {% block "content" %}
 <span class="left">
 <img class="badge" src="{{claim.badge.image}}">
 </span>
 <span class="right">
-<div class="announcement">Claim your <i>{{claim.badge.name}}</i> Badge!</div>
+<div class="announcement">
+    {% blocktrans with badge_name=claim.badge.name %}
+    Claim your <i>{{badge_name}}</i> Badge!
+    {% endblocktrans %}
+    </div>
 <div class="description">
 {{claim.badge.description|markdown}}
 </div>
@@ -14,18 +19,20 @@
 {% if claim.recipient %}
 
 <div>
-<a class="btn btn-large" href="#" onclick=claim()>Send to your Backpack!</a>
+    <a class="btn btn-large" href="#" onclick=claim()>
+        {% trans "Send to your Backpack!" %}
+    </a>
 </div>
 {% else %}
 <form method="POST">
 {% csrf_token %}
-<label for="recipient-input">Your Email Address:</label>
+<label for="recipient-input">{% trans "Your Email Address:" %}</label>
 <input id="recipient-input" name="recipient" type="text" />
 {% if claim.code %}
-<label for="code-input">Claim Code</label>
+<label for="code-input">{% trans "Claim Code" %}</label>
 <input id="code-input" name="code" type="text" />
 {% endif %}
-<input type="submit" value="Claim Your Badge!" />
+<input type="submit" value='{% trans "Claim Your Badge!" %}' />
 </form>
 {% endif %}
 </span>
