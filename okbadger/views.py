@@ -1,14 +1,15 @@
-from django.shortcuts import render_to_response, get_object_or_404
-from django.core.context_processors import csrf
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, Http404
-from okbadger.models import *
-from okbadger.util import create_new_instance, json_response
-from okbadger.util import create_or_return_claim
 import json
 import markdown
 import hashlib
 import time
+from django.shortcuts import render_to_response, get_object_or_404
+from django.core.context_processors import csrf
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse, Http404
+from django.db import connection
+from okbadger.models import *
+from okbadger.util import create_new_instance, json_response
+from okbadger.util import create_or_return_claim
 
 
 def issuer(request, slug=None):
@@ -165,3 +166,20 @@ def issue_api(request):
                 },
             }
     return json_response(data)
+
+
+def stats(request):
+    cur=connection.cursor()
+    cur.execute("""select count(id), badge_id from 
+                okbadger_instance group by badge_id""");
+    bd=cur.fetchall()
+    data=[]
+    for b in bd:
+        badge=Badge.objects.get(id=b[1])
+        data.append({
+                    "name": badge.name,
+                    "id": badge.id,
+                    "image": badge.image,
+                    "count": b[0]
+                    })
+    return render_to_response("stats.html",{"badges": json.dumps(data)})

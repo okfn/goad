@@ -15,5 +15,6 @@ urlpatterns = patterns(
         'okbadger.views.instance'),
     url(r'^claim/(?P<id>\d+)$', 'okbadger.views.claim'),
     url(r'^api/issue', 'okbadger.views.issue_api'),
+    url(r'^stats','okbadger.views.stats'),
 
 )

@@ -1,0 +1,78 @@
+{% extends "badge-base.html" %}
+
+{% load i18n %}
+
+{% block "head" %}
+<style>
+rect {
+    fill: #0db1db;
+    }
+</style>    
+{% endblock %}
+
+{% block "content" %}
+<div id="graph">
+</div>
+
+Total Bages Issued:
+<span id="number">
+0
+</span>
+{% endblock %}
+{% block "scripts" %}
+<script src="/static/js/vendor/underscore-min.js"></script>
+<script src="/static/js/vendor/d3.v3.min.js"></script>
+<script>
+var stats = function () {
+    width = 500,
+    height = 600,
+    badges={{badges|safe}}
+    total=_.reduce(_.pluck(badges, "count"),function(x,y) { return x+y });
+    d3.select("#number").text(total);
+
+    barchart = function (svg, data, prop, label) {
+        margin = 50;
+        bw=width/(data.length * 1.0) *0.8;
+        bs=width/(data.length * 1.0) *0.2;
+        yscale = d3.scale.linear()
+            .domain([0, _.max(_.pluck(data, prop))])
+            .range([parseInt(svg.attr("height"))-margin, margin]);
+        
+        svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", function(d,i) {
+                return (i+1)*bs+i*bw;
+                })
+            .attr("y", function(d,i) {
+                return yscale(d[prop]);
+                })
+            .attr("width", bw)
+            .attr("height" , function(d) {
+                return svg.attr("height") - margin - yscale(d[prop]);
+                });
+         if (label) {       
+            svg.selectAll("text")
+                .data(data)
+                .enter()
+                .append("text")
+                .attr("transform", function(d,i){ return " " +
+                    "translate("+ [(i+1)*bs+i*bw + bw/2 ,
+                            svg.attr("height")- margin] + ")" +
+                    " rotate(270)"})
+                .text(function(d) { return d[label] + ": " + d[prop] });
+                }
+        }
+    svg=d3.select("#graph").append("svg")
+        .attr("width",width)
+        .attr("height",height);
+
+    barchart(svg, badges, "count", "name")    
+    
+
+
+}();
+
+</script>
+{% endblock %}
